@@ -13,18 +13,20 @@ Dual-protocol syslog listener → calls get-and-quarantine API.
 import asyncio, socket, re, requests
 from collections import deque
 
-API_URL   = "http://159.203.46.30:8000/get-and-quarantine"   # adjust if needed
+API_URL   = "http://159.203.46.30:8000/get-and-quarantine"   # point to middleware API endpoint
 TIMEOUT_S = 5
 BUFFER    = deque(maxlen=100)
 
 # ── Regex that tolerates escaped quotes inside log="…"
-LOG_FIELD_RE = re.compile(r'log="((?:[^"\\]|\\.)*)"')
+LOG_FIELD_RE = re.compile(r'log="((?:[^"\\]|\\.)*)"') #extract the entire log string.
 
 def process_line(raw: str) -> None:
     m = LOG_FIELD_RE.search(raw)
     if not m:
         return
-
+#Uses the previously defined regex LOG_FIELD_RE to search for a log="..." field inside the syslog line.
+#If found, m will be a match object containing the value of the log="..." part.
+  
     # Un-escape any \" inside the captured string
     kv_string = m.group(1).replace(r'\"', '"')
 
