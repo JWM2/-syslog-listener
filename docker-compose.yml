@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  syslog-listener:
+    build: .
+    container_name: syslog-listener
+    restart: unless-stopped
+    logging:
+      driver: "none"
+    ports:
+      - "514:514/udp"
+      - "514:514/tcp"
