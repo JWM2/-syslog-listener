@@ -1,0 +1,5 @@
+| Task                                   | Command                                         | What it does                                                                   |
+| -------------------------------------- | ----------------------------------------------- | ------------------------------------------------------------------------------ |
+| Restart **one** container              | `docker restart syslog-listener`                | Gracefully stops, then starts the same container with the same options it had. |
+| Restart **both** listener & middleware | `docker restart syslog-listener middleware-app` | Give multiple names/IDs in one line.                                           |
+| Restart **all running** containers     | `docker restart $(docker ps -q)`                | Uses command substitution to grab every container ID.                          |
